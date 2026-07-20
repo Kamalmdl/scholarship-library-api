@@ -5,6 +5,7 @@ import org.kamal.library_management.dto.BookRequestDto;
 import org.kamal.library_management.dto.BookResponseDto;
 import org.kamal.library_management.entity.Author;
 import org.kamal.library_management.entity.Book;
+import org.kamal.library_management.exceptions.ResourceNotFoundException;
 import org.kamal.library_management.repository.AuthorRepository;
 import org.kamal.library_management.repository.BookRepository;
 import org.kamal.library_management.service.BookService;
@@ -22,7 +23,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookResponseDto create(BookRequestDto requestDto) {
         Author author = authorRepository.findById(requestDto.getAuthorId())
-                .orElseThrow(() -> new RuntimeException("Author not found with id: " + requestDto.getAuthorId()));
+                .orElseThrow(() -> new ResourceNotFoundException("Author not found with id: " + requestDto.getAuthorId()));
 
         Book book = Book.builder()
                 .title(requestDto.getTitle())
@@ -54,7 +55,7 @@ public class BookServiceImpl implements BookService {
         Book book = findBookOrThrow(id);
 
         Author author = authorRepository.findById(requestDto.getAuthorId())
-                .orElseThrow(() -> new RuntimeException("Author not found with id: " + requestDto.getAuthorId()));
+                .orElseThrow(() -> new ResourceNotFoundException("Author not found with id: " + requestDto.getAuthorId()));
 
         book.setTitle(requestDto.getTitle());
         book.setIsbn(requestDto.getIsbn());
@@ -73,7 +74,7 @@ public class BookServiceImpl implements BookService {
 
     private Book findBookOrThrow(Long id) {
         return bookRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Book not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Book not found with id: " + id));
     }
 
     private BookResponseDto toResponseDto(Book book) {

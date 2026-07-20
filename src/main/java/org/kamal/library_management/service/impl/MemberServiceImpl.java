@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.kamal.library_management.dto.MemberRequestDto;
 import org.kamal.library_management.dto.MemberResponseDto;
 import org.kamal.library_management.entity.Member;
+import org.kamal.library_management.exceptions.ResourceNotFoundException;
 import org.kamal.library_management.repository.MemberRepository;
 import org.kamal.library_management.service.MemberService;
 import org.springframework.stereotype.Service;
@@ -59,7 +60,7 @@ public class MemberServiceImpl implements MemberService {
 
     private Member findMemberOrThrow(Long id) {
         return memberRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Member not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Member not found with id: " + id));
     }
 
     private MemberResponseDto toResponseDto(Member member) {

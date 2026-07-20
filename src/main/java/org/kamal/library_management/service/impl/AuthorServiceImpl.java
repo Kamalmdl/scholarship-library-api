@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.kamal.library_management.dto.AuthorRequestDto;
 import org.kamal.library_management.dto.AuthorResponseDto;
 import org.kamal.library_management.entity.Author;
+import org.kamal.library_management.exceptions.ResourceNotFoundException;
 import org.kamal.library_management.repository.AuthorRepository;
 import org.kamal.library_management.service.AuthorService;
 import org.springframework.stereotype.Service;
@@ -59,7 +60,7 @@ public class AuthorServiceImpl implements AuthorService {
 
     private Author findAuthorOrThrow(Long id) {
         return authorRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Author not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Author not found with id: " + id));
     }
 
     private AuthorResponseDto toResponseDto(Author author) {
