@@ -5,6 +5,9 @@ import lombok.RequiredArgsConstructor;
 import org.kamal.library_management.dto.BookRequestDto;
 import org.kamal.library_management.dto.BookResponseDto;
 import org.kamal.library_management.service.BookService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,8 +33,9 @@ public class BookController {
     }
 
     @GetMapping
-    public ResponseEntity<List<BookResponseDto>> getAll() {
-        return ResponseEntity.ok(bookService.getAll());
+    public ResponseEntity<Page<BookResponseDto>> getAll(
+            @PageableDefault(size = 10, sort = "id") Pageable pageable) {
+        return ResponseEntity.ok(bookService.getAll(pageable));
     }
 
     @PutMapping("/{id}")

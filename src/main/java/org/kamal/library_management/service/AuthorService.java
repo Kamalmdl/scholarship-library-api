@@ -1,9 +1,10 @@
 package org.kamal.library_management.service;
 
+
 import org.kamal.library_management.dto.AuthorRequestDto;
 import org.kamal.library_management.dto.AuthorResponseDto;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface AuthorService {
 
@@ -11,7 +12,7 @@ public interface AuthorService {
 
     AuthorResponseDto getById(Long id);
 
-    List<AuthorResponseDto> getAll();
+    Page<AuthorResponseDto> getAll(Pageable pageable);
 
     AuthorResponseDto update(Long id, AuthorRequestDto requestDto);
 

@@ -7,6 +7,8 @@ import org.kamal.library_management.entity.Author;
 import org.kamal.library_management.exceptions.ResourceNotFoundException;
 import org.kamal.library_management.repository.AuthorRepository;
 import org.kamal.library_management.service.AuthorService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,11 +37,9 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public List<AuthorResponseDto> getAll() {
-        return authorRepository.findAll()
-                .stream()
-                .map(this::toResponseDto)
-                .toList();
+    public Page<AuthorResponseDto> getAll(Pageable pageable) {
+        return authorRepository.findAll(pageable)
+                .map(this::toResponseDto);
     }
 
     @Override

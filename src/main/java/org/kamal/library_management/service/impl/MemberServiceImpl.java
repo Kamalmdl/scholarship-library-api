@@ -7,6 +7,8 @@ import org.kamal.library_management.entity.Member;
 import org.kamal.library_management.exceptions.ResourceNotFoundException;
 import org.kamal.library_management.repository.MemberRepository;
 import org.kamal.library_management.service.MemberService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,11 +37,9 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public List<MemberResponseDto> getAll() {
-        return memberRepository.findAll()
-                .stream()
-                .map(this::toResponseDto)
-                .toList();
+    public Page<MemberResponseDto> getAll(Pageable pageable) {
+        return memberRepository.findAll(pageable)
+                .map(this::toResponseDto);
     }
 
     @Override

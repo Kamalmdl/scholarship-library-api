@@ -5,11 +5,12 @@ import lombok.RequiredArgsConstructor;
 import org.kamal.library_management.dto.MemberRequestDto;
 import org.kamal.library_management.dto.MemberResponseDto;
 import org.kamal.library_management.service.MemberService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/members")
@@ -30,8 +31,9 @@ public class MemberController {
     }
 
     @GetMapping
-    public ResponseEntity<List<MemberResponseDto>> getAll() {
-        return ResponseEntity.ok(memberService.getAll());
+    public ResponseEntity<Page<MemberResponseDto>> getAll(
+            @PageableDefault(size = 10, sort = "id") Pageable pageable) {
+        return ResponseEntity.ok(memberService.getAll(pageable));
     }
 
     @PutMapping("/{id}")

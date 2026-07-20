@@ -5,6 +5,9 @@ import lombok.RequiredArgsConstructor;
 import org.kamal.library_management.dto.AuthorRequestDto;
 import org.kamal.library_management.dto.AuthorResponseDto;
 import org.kamal.library_management.service.AuthorService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,8 +33,9 @@ public class AuthorController {
     }
 
     @GetMapping
-    public ResponseEntity<List<AuthorResponseDto>> getAll() {
-        return ResponseEntity.ok(authorService.getAll());
+    public ResponseEntity<Page<AuthorResponseDto>> getAll(
+            @PageableDefault(size = 10, sort = "id") Pageable pageable) {
+        return ResponseEntity.ok(authorService.getAll(pageable));
     }
 
     @PutMapping("/{id}")

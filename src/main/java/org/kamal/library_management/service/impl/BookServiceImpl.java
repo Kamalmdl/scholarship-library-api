@@ -9,6 +9,8 @@ import org.kamal.library_management.exceptions.ResourceNotFoundException;
 import org.kamal.library_management.repository.AuthorRepository;
 import org.kamal.library_management.repository.BookRepository;
 import org.kamal.library_management.service.BookService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -43,11 +45,9 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookResponseDto> getAll() {
-        return bookRepository.findAll()
-                .stream()
-                .map(this::toResponseDto)
-                .toList();
+    public Page<BookResponseDto> getAll(Pageable pageable) {
+        return bookRepository.findAll(pageable)
+                .map(this::toResponseDto);
     }
 
     @Override
