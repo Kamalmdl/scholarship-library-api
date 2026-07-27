@@ -22,11 +22,15 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     public void commence(HttpServletRequest request, HttpServletResponse response,
                          AuthenticationException authException) throws IOException {
 
+        boolean isExpired = Boolean.TRUE.equals(request.getAttribute("expired"));
+
         ErrorResponseDto error = ErrorResponseDto.builder()
                 .timestamp(LocalDateTime.now())
                 .status(HttpStatus.UNAUTHORIZED.value())
                 .error(HttpStatus.UNAUTHORIZED.getReasonPhrase())
-                .message("Authentication is required to access this resource")
+                .message(isExpired
+                        ? "Your session has expired. Please log in again."
+                        : "Authentication is required to access this resource")
                 .build();
 
         response.setStatus(HttpStatus.UNAUTHORIZED.value());

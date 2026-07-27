@@ -65,4 +65,18 @@ public class JwtUtil {
             return false;
         }
     }
+
+    public boolean isTokenExpired(String token) {
+        try {
+            Jwts.parser()
+                    .verifyWith(getSigningKey())
+                    .build()
+                    .parseSignedClaims(token);
+            return false;
+        } catch (io.jsonwebtoken.ExpiredJwtException e) {
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }
