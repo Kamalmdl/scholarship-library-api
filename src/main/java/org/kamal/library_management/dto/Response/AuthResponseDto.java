@@ -1,0 +1,15 @@
+package org.kamal.library_management.dto.Response;
+
+import lombok.*;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class AuthResponseDto {
+
+    private String token;
+    private String email;
+    private String role;
+}

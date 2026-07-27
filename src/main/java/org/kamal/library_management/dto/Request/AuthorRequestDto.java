@@ -1,4 +1,4 @@
-package org.kamal.library_management.dto;
+package org.kamal.library_management.dto.Request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

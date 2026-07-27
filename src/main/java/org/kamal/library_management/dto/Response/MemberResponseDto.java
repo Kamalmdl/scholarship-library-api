@@ -1,4 +1,4 @@
-package org.kamal.library_management.dto;
+package org.kamal.library_management.dto.Response;
 
 import lombok.*;
 

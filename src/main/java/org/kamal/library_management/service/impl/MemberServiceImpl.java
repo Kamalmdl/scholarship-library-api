@@ -1,8 +1,8 @@
 package org.kamal.library_management.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.kamal.library_management.dto.MemberRequestDto;
-import org.kamal.library_management.dto.MemberResponseDto;
+import org.kamal.library_management.dto.Request.MemberRequestDto;
+import org.kamal.library_management.dto.Response.MemberResponseDto;
 import org.kamal.library_management.entity.Member;
 import org.kamal.library_management.exceptions.ResourceNotFoundException;
 import org.kamal.library_management.repository.MemberRepository;
@@ -10,8 +10,6 @@ import org.kamal.library_management.service.MemberService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
