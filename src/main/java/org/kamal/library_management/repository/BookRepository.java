@@ -2,6 +2,8 @@ package org.kamal.library_management.repository;
 
 import org.kamal.library_management.entity.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,4 +17,9 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     boolean existsByIsbn(String isbn);
 
     List<Book> findByAuthorId(Long authorId);
+
+    List<Book> findByCategories_NameIgnoreCase(String categoryName);
+
+    @Query("SELECT b FROM Book b WHERE LOWER(b.title) LIKE LOWER(CONCAT('%', :keyword, '%'))")
+    List<Book> searchByTitleKeyword(@Param("keyword") String keyword);
 }
