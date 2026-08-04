@@ -1,6 +1,7 @@
 package org.kamal.library_management.repository;
 
 import org.kamal.library_management.entity.Order;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,6 +12,10 @@ import java.util.List;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
+
+    @EntityGraph(attributePaths = {"member", "items", "items.book"})
+    @Override
+    List<Order> findAll();
 
     List<Order> findByMemberId(Long memberId);
 

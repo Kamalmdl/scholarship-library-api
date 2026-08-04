@@ -66,4 +66,19 @@ public class OrderServiceImpl implements OrderService {
                 .bookTitles(bookTitles)
                 .build();
     }
+
+    @Override
+    public List<OrderResponseDto> getAllOrders() {
+        return orderRepository.findAll()
+                .stream()
+                .map(order -> OrderResponseDto.builder()
+                        .id(order.getId())
+                        .memberId(order.getMember().getId())
+                        .orderDate(order.getOrderDate())
+                        .bookTitles(order.getItems().stream()
+                                .map(item -> item.getBook().getTitle())
+                                .toList())
+                        .build())
+                .toList();
+    }
 }
