@@ -7,8 +7,10 @@ import org.kamal.library_management.dto.Response.BookResponseDto;
 import org.kamal.library_management.entity.Book;
 import org.kamal.library_management.repository.BookRepository;
 import org.kamal.library_management.service.BookService;
+import org.kamal.library_management.specification.BookSpecification;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,6 +51,22 @@ public class BookController {
     @GetMapping("/by-category")
     public ResponseEntity<List<Book>> getByCategory(@RequestParam String categoryName) {
         return ResponseEntity.ok(bookRepository.findByCategories_NameIgnoreCase(categoryName));
+    }
+
+    @GetMapping("/filter")
+    public ResponseEntity<List<Book>> filterBooks(
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) Long authorId,
+            @RequestParam(required = false) String categoryName,
+            @RequestParam(required = false) Integer publishedYear) {
+
+        Specification<Book> spec = Specification
+                .where(BookSpecification.hasTitle(title))
+                .and(BookSpecification.hasAuthorId(authorId))
+                .and(BookSpecification.hasCategoryName(categoryName))
+                .and(BookSpecification.hasPublishedYear(publishedYear));
+
+        return ResponseEntity.ok(bookRepository.findAll(spec));
     }
 
     @PutMapping("/{id}")
