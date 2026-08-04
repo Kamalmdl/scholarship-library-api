@@ -2,8 +2,8 @@ package org.kamal.library_management.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.kamal.library_management.dto.Request.AuthorRequestDto;
-import org.kamal.library_management.dto.Response.AuthorResponseDto;
+import org.kamal.library_management.dto.request.AuthorRequestDto;
+import org.kamal.library_management.dto.response.AuthorResponseDto;
 import org.kamal.library_management.service.AuthorService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

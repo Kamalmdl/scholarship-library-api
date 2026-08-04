@@ -1,6 +1,6 @@
 package org.kamal.library_management.exceptions;
 
-import org.kamal.library_management.dto.Response.ErrorResponseDto;
+import org.kamal.library_management.dto.response.ErrorResponseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;

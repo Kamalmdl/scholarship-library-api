@@ -1,7 +1,7 @@
 package org.kamal.library_management.service;
 
-import org.kamal.library_management.dto.Request.BookRequestDto;
-import org.kamal.library_management.dto.Response.BookResponseDto;
+import org.kamal.library_management.dto.request.BookRequestDto;
+import org.kamal.library_management.dto.response.BookResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

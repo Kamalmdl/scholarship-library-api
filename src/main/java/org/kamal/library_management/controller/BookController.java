@@ -2,8 +2,8 @@ package org.kamal.library_management.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.kamal.library_management.dto.Request.BookRequestDto;
-import org.kamal.library_management.dto.Response.BookResponseDto;
+import org.kamal.library_management.dto.request.BookRequestDto;
+import org.kamal.library_management.dto.response.BookResponseDto;
 import org.kamal.library_management.entity.Book;
 import org.kamal.library_management.repository.BookRepository;
 import org.kamal.library_management.service.BookService;

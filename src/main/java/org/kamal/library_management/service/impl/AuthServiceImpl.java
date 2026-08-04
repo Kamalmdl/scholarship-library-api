@@ -1,9 +1,9 @@
 package org.kamal.library_management.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.kamal.library_management.dto.Response.AuthResponseDto;
-import org.kamal.library_management.dto.Request.LoginRequestDto;
-import org.kamal.library_management.dto.Request.RegisterRequestDto;
+import org.kamal.library_management.dto.response.AuthResponseDto;
+import org.kamal.library_management.dto.request.LoginRequestDto;
+import org.kamal.library_management.dto.request.RegisterRequestDto;
 import org.kamal.library_management.entity.Role;
 import org.kamal.library_management.entity.User;
 import org.kamal.library_management.exceptions.ResourceNotFoundException;

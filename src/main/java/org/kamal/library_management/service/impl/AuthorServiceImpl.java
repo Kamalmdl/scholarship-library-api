@@ -1,8 +1,8 @@
 package org.kamal.library_management.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.kamal.library_management.dto.Request.AuthorRequestDto;
-import org.kamal.library_management.dto.Response.AuthorResponseDto;
+import org.kamal.library_management.dto.request.AuthorRequestDto;
+import org.kamal.library_management.dto.response.AuthorResponseDto;
 import org.kamal.library_management.entity.Author;
 import org.kamal.library_management.exceptions.ResourceNotFoundException;
 import org.kamal.library_management.repository.AuthorRepository;

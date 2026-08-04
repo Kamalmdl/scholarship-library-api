@@ -1,4 +1,4 @@
-package org.kamal.library_management.dto.Request;
+package org.kamal.library_management.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
