@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: library-scholarship-api
+  profiles:
+    active: dev
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+
+server:
+  port: 8080
+
+jwt:
+  secret: bu-cox-uzun-ve-tehlukesiz-bir-secret-acar-olmalidir-minimum-32-simvol
+  expiration: 86400000
+
+file:
+  upload-dir: uploads/book-covers
