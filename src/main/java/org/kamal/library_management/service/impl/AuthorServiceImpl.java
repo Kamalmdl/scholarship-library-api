@@ -9,6 +9,7 @@ import org.kamal.library_management.repository.AuthorRepository;
 import org.kamal.library_management.service.AuthorService;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ public class AuthorServiceImpl implements AuthorService {
     private final AuthorRepository authorRepository;
 
     @Override
+    @CacheEvict(value = "authorsList", allEntries = true)
     public AuthorResponseDto create(AuthorRequestDto requestDto) {
         Author author = Author.builder()
                 .fullName(requestDto.getFullName())
@@ -38,13 +40,17 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
+    @Cacheable(value = "authorsList", key = "#pageable")
     public Page<AuthorResponseDto> getAll(Pageable pageable) {
         return authorRepository.findAll(pageable)
                 .map(this::toResponseDto);
     }
 
     @Override
-    @CacheEvict(value = "authors", key = "#id")
+    @Caching(evict = {
+            @CacheEvict(value = "authors", key = "#id"),
+            @CacheEvict(value = "authorsList", allEntries = true)
+    })
     public AuthorResponseDto update(Long id, AuthorRequestDto requestDto) {
         Author author = findAuthorOrThrow(id);
         author.setFullName(requestDto.getFullName());
@@ -55,7 +61,10 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    @CacheEvict(value = "authors", key = "#id")
+    @Caching(evict = {
+            @CacheEvict(value = "authors", key = "#id"),
+            @CacheEvict(value = "authorsList", allEntries = true)
+    })
     public void delete(Long id) {
         Author author = findAuthorOrThrow(id);
         authorRepository.delete(author);
