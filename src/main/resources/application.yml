@@ -19,7 +19,7 @@ server:
   port: 8080
 
 jwt:
-  secret: bu-cox-uzun-ve-tehlukesiz-bir-secret-acar-olmalidir-minimum-32-simvol
+  secret: ${JWT_SECRET:bu-yalniz-lokal-test-ucun-defolt-deyerdir-32-simvoldan-uzun}
   expiration: 86400000
 
 file:
