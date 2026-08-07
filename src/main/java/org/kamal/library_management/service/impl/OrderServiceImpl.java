@@ -1,6 +1,7 @@
 package org.kamal.library_management.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.kamal.library_management.dto.request.OrderRequestDto;
 import org.kamal.library_management.dto.response.OrderResponseDto;
 import org.kamal.library_management.entity.Book;
@@ -11,6 +12,7 @@ import org.kamal.library_management.exceptions.ResourceNotFoundException;
 import org.kamal.library_management.repository.BookRepository;
 import org.kamal.library_management.repository.MemberRepository;
 import org.kamal.library_management.repository.OrderRepository;
+import org.kamal.library_management.service.EmailNotificationService;
 import org.kamal.library_management.service.OrderService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
@@ -26,6 +29,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final MemberRepository memberRepository;
     private final BookRepository bookRepository;
+    private final EmailNotificationService emailNotificationService;
 
     @Override
     @Transactional
@@ -58,6 +62,9 @@ public class OrderServiceImpl implements OrderService {
         });
 
         Order saved = orderRepository.save(order);
+
+        log.info("Order {} saved, returning response to client now", saved.getId());
+        emailNotificationService.sendOrderConfirmationEmail(member.getEmail(), saved.getId());
 
         return OrderResponseDto.builder()
                 .id(saved.getId())
