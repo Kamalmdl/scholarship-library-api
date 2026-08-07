@@ -7,6 +7,8 @@ import org.kamal.library_management.entity.Author;
 import org.kamal.library_management.exceptions.ResourceNotFoundException;
 import org.kamal.library_management.repository.AuthorRepository;
 import org.kamal.library_management.service.AuthorService;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -29,6 +31,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
+    @Cacheable(value = "authors", key = "#id")
     public AuthorResponseDto getById(Long id) {
         Author author = findAuthorOrThrow(id);
         return toResponseDto(author);
@@ -41,6 +44,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
+    @CacheEvict(value = "authors", key = "#id")
     public AuthorResponseDto update(Long id, AuthorRequestDto requestDto) {
         Author author = findAuthorOrThrow(id);
         author.setFullName(requestDto.getFullName());
@@ -51,6 +55,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
+    @CacheEvict(value = "authors", key = "#id")
     public void delete(Long id) {
         Author author = findAuthorOrThrow(id);
         authorRepository.delete(author);
