@@ -1,5 +1,6 @@
 package org.kamal.library_management.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.kamal.library_management.dto.request.OrderRequestDto;
@@ -18,6 +19,8 @@ public class OrderController {
 
     private final OrderService orderService;
 
+    @Operation(summary = "Create a new order",
+            description = "Creates an order with one or more items. The whole operation is transactional — if any book id is invalid, nothing is saved.")
     @PostMapping
     public ResponseEntity<OrderResponseDto> create(@Valid @RequestBody OrderRequestDto requestDto) {
         OrderResponseDto created = orderService.createOrder(requestDto);

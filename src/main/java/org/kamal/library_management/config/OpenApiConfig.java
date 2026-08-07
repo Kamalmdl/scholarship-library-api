@@ -14,6 +14,6 @@ public class OpenApiConfig {
                 .info(new Info()
                         .title("Library Management API")
                         .description("Scholarship program CRUD REST API — Author, Book, Member management")
-                        .version("v1.0"));
+                        .version("v2.0 — added caching, file upload, scheduling, async, config profiles"));
     }
 }

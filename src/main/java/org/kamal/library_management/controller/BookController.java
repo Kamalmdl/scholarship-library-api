@@ -1,5 +1,7 @@
 package org.kamal.library_management.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.kamal.library_management.dto.request.BookRequestDto;
@@ -87,17 +89,23 @@ public class BookController {
         return ResponseEntity.noContent().build();
     }
 
+    @Operation(summary = "Upload a cover image for a book",
+            description = "Accepts a JPEG or PNG image up to 5MB. Returns the generated file name.")
     @PostMapping("/{id}/cover")
-    public ResponseEntity<String> uploadCover(@PathVariable Long id,
-                                              @RequestParam("file") MultipartFile file) {
+    public ResponseEntity<String> uploadCover(
+            @Parameter(description = "ID of the book to attach the cover to") @PathVariable Long id,
+            @Parameter(description = "Image file (JPEG or PNG, max 5MB)") @RequestParam("file") MultipartFile file)  {
         bookService.getById(id);
 
         String fileName = fileStorageService.storeFile(file);
         return ResponseEntity.ok(fileName);
     }
 
+    @Operation(summary = "Download a book cover image",
+            description = "Returns the image file previously uploaded via the upload-cover endpoint.")
     @GetMapping("/cover/{fileName}")
-    public ResponseEntity<Resource> downloadCover(@PathVariable String fileName) {
+    public ResponseEntity<Resource> downloadCover(
+            @Parameter(description = "Generated file name returned by the upload endpoint") @PathVariable String fileName)  {
         Resource resource = fileStorageService.loadFile(fileName);
 
         return ResponseEntity.ok()
