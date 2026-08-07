@@ -7,14 +7,19 @@ import org.kamal.library_management.dto.response.BookResponseDto;
 import org.kamal.library_management.entity.Book;
 import org.kamal.library_management.repository.BookRepository;
 import org.kamal.library_management.service.BookService;
+import org.kamal.library_management.service.FileStorageService;
 import org.kamal.library_management.specification.BookSpecification;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -25,6 +30,7 @@ public class BookController {
 
     private final BookService bookService;
     private final BookRepository bookRepository;
+    private final FileStorageService fileStorageService;
 
     @PostMapping
     public ResponseEntity<BookResponseDto> create(@Valid @RequestBody BookRequestDto requestDto) {
@@ -79,5 +85,24 @@ public class BookController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         bookService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{id}/cover")
+    public ResponseEntity<String> uploadCover(@PathVariable Long id,
+                                              @RequestParam("file") MultipartFile file) {
+        bookService.getById(id);
+
+        String fileName = fileStorageService.storeFile(file);
+        return ResponseEntity.ok(fileName);
+    }
+
+    @GetMapping("/cover/{fileName}")
+    public ResponseEntity<Resource> downloadCover(@PathVariable String fileName) {
+        Resource resource = fileStorageService.loadFile(fileName);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.IMAGE_JPEG)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + fileName + "\"")
+                .body(resource);
     }
 }
